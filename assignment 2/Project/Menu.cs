@@ -48,7 +48,7 @@ class Menu{
         {
             case LOGININT:
             //login menu
-            Console.WriteLine("test1");
+            LoginBaseMenu();
             break;
 
             case REGISTERINT:
@@ -61,7 +61,7 @@ class Menu{
             break;
 
             default:
-            CMDLine.displayError("Invalid menu choice. Please try again.");
+            CMDLine.displayError("#Error - Invalid Menu Option, please try again.");
             break;
         }
         return true; //keep looping through the menu 
@@ -120,7 +120,7 @@ class Menu{
             break;
 
             default:
-            CMDLine.displayError("Invalid menu option. Please try again.");
+            CMDLine.displayError("#Error - Invalid Menu Option, please try again.");
             break;
         }
         return true;
@@ -136,7 +136,7 @@ class Menu{
         name = CMDLine.getString();
             
 
-        while(age < 0 || age > 100) 
+        while(age < 1 || age > 100) 
         {
             CMDLine.displayMessage("Please enter in your age:");
             age = CMDLine.getInt();
@@ -225,7 +225,7 @@ class Menu{
             break;
 
             default:
-            CMDLine.displayError("Invalid menu option. Please try again.");
+            CMDLine.displayError("#Error - Invalid Menu Option. Please try again.");
             break;
         }
         return true;
@@ -396,6 +396,21 @@ class Menu{
         }
         return true;
     }
+
+    //Breakpoint between Register Menus and Login Menus for easy viewing
+
+    private void LoginBaseMenu()
+    {
+        CMDLine.displayMessage();
+        CMDLine.displayMessage("Login Menu.");
+        CMDLine.displayMessage("Please enter in your email:");
+        string emailToCheck = CMDLine.getString();
+        User.checkIfEmailReal(emailToCheck);
+        CMDLine.displayMessage("Please enter in your password:");
+        string password = CMDLine.getString();
+
+    }
+
 }
 
 
