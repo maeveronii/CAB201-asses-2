@@ -73,8 +73,7 @@ public partial class Menu
         }
         else
         {
-            CMDLine.displayMessage("#Error - Wrong Password");
-            Run();
+            CMDLine.displayError("#Error - Wrong Password.");
         }
     }
 
@@ -108,20 +107,26 @@ public partial class Menu
         const string displaydetailsstr = "Display my details";
         const string changepasswordstr = "Change password";
         const string checkinstr = "Check in";
+        const string checkoutstr = "Check out";
         const string seeroomstr = "See room";
         const string seesurgeonstr = "See surgeon";
         const string seesurgerydetailsstr = "See surgery date and time";
         const string logoutstr = "Log out";
 
-        const int  displaydetailsint = 0, changepasswordint = 1, checkinint = 2, seeroomint = 3, seesurgeonint = 4, seesurgerydetailsint = 5, logoutint = 6;
-
-        int option = CMDLine.GetOption(titlestr, displaydetailsstr, changepasswordstr, checkinstr, seeroomstr, seesurgeonstr, seesurgerydetailsstr, logoutstr);
-
+        const int  displaydetailsint = 0, changepasswordint = 1, checkinoutint = 2, seeroomint = 3, seesurgeonint = 4, seesurgerydetailsint = 5, logoutint = 6;
+        int option;
+        if(!activePatient.userCheckedIn)
+        {
+            option = CMDLine.GetOption(titlestr, displaydetailsstr, changepasswordstr, checkinstr, seeroomstr, seesurgeonstr, seesurgerydetailsstr, logoutstr);
+        }
+        else
+        {
+            option = CMDLine.GetOption(titlestr, displaydetailsstr, changepasswordstr, checkoutstr, seeroomstr, seesurgeonstr, seesurgerydetailsstr, logoutstr);
+        }
         switch(option)
         {
             case displaydetailsint:
             activePatient.displayPatientDetails();
-            return true;
             break;
 
             case changepasswordint:
@@ -129,9 +134,16 @@ public partial class Menu
             return false;
             break;
 
-            case checkinint:
-            /*CurrentlyLoggedIn.checkIn();*/
-            return false;
+            case checkinoutint:
+            if(!activePatient.userCheckedIn)
+            {
+                
+                activePatient.checkIn();
+            }
+            else
+            {
+                activePatient.checkOut();
+            }
             break;
 
             case seeroomint:
@@ -150,7 +162,7 @@ public partial class Menu
             break;
 
             case logoutint:
-            CMDLine.displayMessage($"Patient {activeUser.UserName} has logged out.");
+            CMDLine.displayMessage($"Patient {activePatient.UserName} has logged out.");
             activeUser = null;
             return false;
             break;

@@ -25,10 +25,16 @@ public partial class Menu{
 
     bool loggedIn = false;
 
+    /*The "active users" below are created in order to be used when someone is "logged in". whenever a floor manager, or surgeon, or patient is logged in, 
+    the object corresponding to their class has all of the constructors of the specific floor manager, surgeon, or patient added to it.*/
     User activeUser = new();
     Patient activePatient = new();
     FloorManager activeFloorManager = new();
     Surgeon activeSurgeon = new();
+
+    /*These lists work in similar ways to their respective "active" objects. They are used for logging in to the system. When a new user is registered, 
+    they are added to their respective list, and then later, when logging in, if an object matching the users email and password inputs is found in one
+    of these lists, the user is transported to the respective menu, e.g. the patient menu. */
     List<User> Users = new List<User>();
     List<Patient> Patients = new List<Patient>();
     List<FloorManager> FloorManagers = new List<FloorManager>();

@@ -110,10 +110,73 @@ public partial class Menu
     }
 
     /// <summary>
+    /// Method to check inputted password. Password needs to be at least 8 characters long, include a number value, and have mixed case.
+    /// </summary>
+    private void checkPassword()
+    {
+        bool success = false;
+        do
+        {
+            CMDLine.displayMessage("Please enter in your password:");
+            password = CMDLine.getString();
+            int passLength = password.Length;
+            if(passLength >= 8 && !password.All(char.IsLetter) && !password.All(char.IsNumber) && password.Any(char.IsUpper) && password.Any(char.IsLower))
+            {
+                success = true;
+            }
+            else
+            {
+                CMDLine.displayError("#Error - Supplied password is invalid, please try again.");
+            }
+        }while(!success);
+    }
+
+    /// <summary>
+    /// Bool to check if the email provided is actually valid or not.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public bool IsValidEmail(string email)
+    {
+        var trimmedEmail = email.Trim();
+
+        try {
+            var addr = new System.Net.Mail.MailAddress(email); //Checks if email is a valid email, using built in System.Net functions.
+            return addr.Address == trimmedEmail;
+        }
+        catch {
+            return false;
+        }
+    }    
+    
+    /// <summary>
+    /// Method that loops through if IsValidEmail() provides false.
+    /// </summary>
+    private void checkEmail()
+    {
+        bool success = false;
+        do
+        {
+            CMDLine.displayMessage("Please enter in your email:");
+            email = CMDLine.getString();
+            if(IsValidEmail(email))
+            {
+                success = true;
+            }
+            if(!IsValidEmail(email))
+            {
+                CMDLine.displayError("#Error - Supplied email is invalid, please try again.");
+            }
+        }while(!success);
+    }
+
+
+    /// <summary>
     /// Method used to register as a patient. At the end of method, gathers all information used and creates a new "Patient" object with the data as constructors.
     /// </summary>
     private void registerPatientMenu()
     {
+        age = -1;
         CMDLine.displayMessage("Registering as a patient.");
         checkName();
         while(age < 0 || age > 100) 
@@ -127,13 +190,13 @@ public partial class Menu
             
         }
         checkMobile();
-        CMDLine.displayMessage("Please enter in your email:");
-        string email = CMDLine.getString();
-        CMDLine.displayMessage("Please enter in your password:");
-        string password = CMDLine.getString();
+        checkEmail();
+        checkPassword();
         string type = "Patient";
+        bool checkedIn = false;
+        bool surgeryPerformed = false;
 
-        Patient patient = new Patient(name, age, mobile, email, password, type);
+        Patient patient = new Patient(name, age, mobile, email, password, type, checkedIn, surgeryPerformed);
         Users.Add(patient);
         Patients.Add(patient);
         
@@ -223,8 +286,7 @@ public partial class Menu
         checkMobile();
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
-        CMDLine.displayMessage("Please enter in your password:");
-        string password = CMDLine.getString();
+        checkPassword();
 
         while(staffID < 100 || staffID > 999) 
         {
@@ -283,8 +345,7 @@ public partial class Menu
         checkMobile();
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
-        CMDLine.displayMessage("Please enter in your password:");
-        string password = CMDLine.getString();
+        checkPassword();
         
         while(staffID < 100 || staffID > 999) 
         {
