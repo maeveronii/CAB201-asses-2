@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Hospital;
 
 public partial class Menu
@@ -62,50 +64,78 @@ public partial class Menu
     }
 
     /// <summary>
+    /// Method that validates the Name provided. To provide a proper name, must be all letters (or spaces), and 
+    /// must include atleast one character. No return value is needed, as the variable "name" is just being checked.
+    /// </summary>
+    private void checkName()
+    {  
+        bool success = false;
+        do
+        {
+            CMDLine.displayMessage("Please enter in your name:");
+            name = CMDLine.getString();
+            if(name != "" && name.All(c=>Char.IsLetter(c) || c==' ') && name.Any(x =>  char.IsLetter(x)))
+            {
+                success = true;
+            }
+            else
+            {
+                CMDLine.displayError("#Error - Supplied name is invalid, please try again.");
+            }
+        }while(!success);
+    }
+
+    /// <summary>
+    /// Method to check the input for mobile number. To provide a proper mobile number, all characters must be digits, 
+    /// the string must start with a "0" and the length of the string must be 10. No return value is needed, as the variable
+    /// "mobile" is just being checked.
+    /// </summary>
+    private void checkMobile()
+    {  
+        bool success = false;
+        do
+        {
+            CMDLine.displayMessage("Please enter in your mobile number:");
+            mobile = CMDLine.getString();
+            int mobileLength = mobile.Length;
+            if(mobileLength == 10 && mobile.StartsWith("0") && mobile.All(char.IsNumber))
+            {
+                success = true;
+            }
+            else
+            {
+                CMDLine.displayError("#Error - Supplied mobile number is invalid, please try again.");
+            }
+        }while(!success);
+    }
+
+    /// <summary>
     /// Method used to register as a patient. At the end of method, gathers all information used and creates a new "Patient" object with the data as constructors.
     /// </summary>
     private void registerPatientMenu()
     {
         CMDLine.displayMessage("Registering as a patient.");
-        CMDLine.displayMessage("Please enter in your name:");
-        name = CMDLine.getString();
-            
-
-        while(age < 1 || age > 100) 
+        checkName();
+        while(age < 0 || age > 100) 
         {
             CMDLine.displayMessage("Please enter in your age:");
             age = CMDLine.getInt();
-            if (age < 0 || age > 100)
+            if (age < 0 || age > 100 )
             {
                 CMDLine.displayError("#Error - Supplied age is invalid, please try again.");
             }
-            /*correctInt = int.TryParse(Console.ReadLine(), out age); straight up doesnt work
-
-            switch (correctInt)
-            {
-                case false:
-                CMDLine.displayError("#Error - Supplied value is not an integer, please try again.");
-                break;
-
-                case true:
-                age = CMDLine.getInt();
-                if (age < 0 || age > 100)
-                {
-                    CMDLine.displayError("#Error - Supplied age is invalid, please try again.");
-                }
-                break;
-            }*/
+            
         }
-
-        CMDLine.displayMessage("Please enter in your mobile number:");
-        int mobile = CMDLine.getInt();
+        checkMobile();
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
         CMDLine.displayMessage("Please enter in your password:");
         string password = CMDLine.getString();
+        string type = "Patient";
 
-        Users.Add(new Patient(name, age, mobile, email, password));
-        Patients.Add(new Patient(name, age, mobile, email, password));
+        Patient patient = new Patient(name, age, mobile, email, password, type);
+        Users.Add(patient);
+        
         
         CMDLine.displayMessage($"{name} is registered as a patient.");
 
@@ -173,11 +203,12 @@ public partial class Menu
     /// </summary>
     private void registerFloorManagerMenu()
     {
+        age = 0;
+        staffID = 0;
+        floorNumber = 0;
         CMDLine.displayMessage("Registering as a floor manager.");
-        CMDLine.displayMessage("Please enter in your name:");
-        name = CMDLine.getString();
+        checkName();
             
-
         while(age < 21 || age > 70) 
         {
             CMDLine.displayMessage("Please enter in your age:");
@@ -188,8 +219,7 @@ public partial class Menu
             }
         }
 
-        CMDLine.displayMessage("Please enter in your mobile number:");
-        int mobile = CMDLine.getInt();
+        checkMobile();
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
         CMDLine.displayMessage("Please enter in your password:");
@@ -214,12 +244,14 @@ public partial class Menu
                 CMDLine.displayError("#Error - Supplied floor is invalid, please try again.");
             }
         }
+        string type = "Floor Manager";
         
         
 
 
-        Users.Add(new FloorManager(name, age, mobile, email, password, staffID, floorNumber));
-        FloorManagers.Add(new FloorManager(name, age, mobile, email, password, staffID, floorNumber));
+        FloorManager floorManager = new FloorManager(name, age, mobile, email, password, type, staffID, floorNumber);
+        Users.Add(floorManager);
+
         
         CMDLine.displayMessage($"{name} is registered as a floor manager.");
 
@@ -230,10 +262,11 @@ public partial class Menu
     /// </summary>
     private void registerSurgeonMenu()
     {
+        age = 0;
+        staffID = 0;
+
         CMDLine.displayMessage("Registering as a surgeon.");
-        CMDLine.displayMessage("Please enter in your name:");
-        name = CMDLine.getString();
-            
+        checkName();
 
         while(age < 30 || age > 75) 
         {
@@ -245,8 +278,7 @@ public partial class Menu
             }
         }
 
-        CMDLine.displayMessage("Please enter in your mobile number:");
-        int mobile = CMDLine.getInt();
+        checkMobile();
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
         CMDLine.displayMessage("Please enter in your password:");
@@ -263,9 +295,13 @@ public partial class Menu
         }
 
         registerSurgeonSpecialty();
+
+        string type = "Surgeon";
+
+        Surgeon surgeon = new Surgeon(name, age, mobile, email, password, type, staffID, specialty);
+        Users.Add(surgeon);
         
-        Users.Add(new Surgeon(name, age, mobile, email, password, staffID, specialty));
-        Surgeons.Add(new Surgeon(name, age, mobile, email, password, staffID, specialty));
+    
         
         CMDLine.displayMessage($"{name} is registered as a surgeon.");
 

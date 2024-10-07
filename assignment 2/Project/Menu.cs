@@ -12,6 +12,10 @@ public partial class Menu{
     private Surgeon userSurgeon;
     int age = -1;
     string name = null;
+    string mobile = "";
+    string email = "";
+    string password = "";
+    
 
     int floorNumber = 0;
     int staffID = 0;
@@ -19,10 +23,9 @@ public partial class Menu{
     string specialty = null;
     int emailIndex;
 
+    bool loggedIn = false;
+    User activeUser = new();
     List<User> Users = new List<User>();
-    List<Patient> Patients = new List<Patient>();
-    List<FloorManager> FloorManagers = new List<FloorManager>();
-    List<Surgeon> Surgeons = new List<Surgeon>();
 
     /// <summary>
     /// Creates a bool that when true, loops through attached menu, in this case, the main menu.
@@ -44,6 +47,22 @@ public partial class Menu{
     {
         CMDLine.displayMessage();
 
+        /*Patient john = new Patient("john", 13, 012345, "maeve@maeve", password, "patient");
+        Users.Add(john);
+
+        FloorManager john2 = new FloorManager("john", 13, 012345, "maeve2@maeve", password, "patient", 503, 1);
+        Users.Add(john2);
+
+        User john3 = new User("john", 13, 012345, "maeve3@maeve", password, "patient");
+        Users.Add(john3);
+
+        for(var i = 0; i < Users.Count(); i++)
+        {
+            CMDLine.displayMessage(Users[i].UserEmail);
+        }*/
+
+
+        
         const string MAINMENUSTR = "Please choose from the menu below:";
         const string LOGINSTR = "Login as a registered user";
         const string REGISTERSTR = "Register as a new user";
