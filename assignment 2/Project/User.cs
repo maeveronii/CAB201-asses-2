@@ -25,13 +25,5 @@ public class User
     {
 
     }
-    public void displayPatientDetails()
-        {
-            CMDLine.displayMessage("Your details.");
-            CMDLine.displayMessage($"Name: {UserName}");
-            CMDLine.displayMessage($"Age: {UserAge}");
-            CMDLine.displayMessage($"Mobile phone: {UserMobile}");
-            CMDLine.displayMessage($"Email: {UserEmail}");
-        }
 }
 

@@ -38,16 +38,36 @@ public partial class Menu
             CMDLine.displayMessage($"Hello {activeUser.UserName} welcome back.");
             if(activeUser.UserType == "Patient") //checks to see if currently logged in user is patient
             {
+                for(var i = 0; i < Patients.Count(); i++)
+                {
+                    if(Patients[i].UserEmail == email)
+                    {
+                        activePatient = Patients[i];
+                    }
+                }
                 PatientMenu();
-                success = true;
             }
             else if(activeUser.UserType == "Floor Manager") //checks to see if currently logged in user is floor manager
             {
-                success = true;
+                for(var i = 0; i < FloorManagers.Count(); i++)
+                {
+                    if(FloorManagers[i].UserEmail == email)
+                    {
+                        activeFloorManager = FloorManagers[i];
+                    }
+                }
+                FloorManagerMenu();
             }
             else if(activeUser.UserType == "Surgeon") //checks to see if currently logged in user is surgeon
             {
-                success = true;
+               for(var i = 0; i < Surgeons.Count(); i++)
+               {
+                    if(Surgeons[i].UserEmail == email)
+                   {
+                       activeSurgeon = Surgeons[i];
+                   }
+               }
+               //SurgeonMenu();
             }
 
         }
@@ -100,7 +120,7 @@ public partial class Menu
         switch(option)
         {
             case displaydetailsint:
-            activeUser.displayPatientDetails();
+            activePatient.displayPatientDetails();
             return true;
             break;
 
@@ -178,12 +198,12 @@ public partial class Menu
 
         const int  floordisplaydetailsint = 0, floorchangepasswordint = 1, assignroomint = 2, assignsurgeryint = 3, unassignroomint = 4, floorlogoutint = 5;
 
-        int option = CMDLine.GetOption(titlestr, floordisplaydetailsstr, floorchangepasswordstr, assignroomstr, assignsurgery, unassignroomstr, floorlogoutstr,);
+        int option = CMDLine.GetOption(titlestr, floordisplaydetailsstr, floorchangepasswordstr, assignroomstr, assignsurgery, unassignroomstr, floorlogoutstr);
 
         switch(option)
         {
             case floordisplaydetailsint:
-            activeUser.displayFloorManagerDetails();
+            activeFloorManager.displayFloorManagerDetails();
             return true;
             break;
 
@@ -208,7 +228,7 @@ public partial class Menu
             break;
 
             case floorlogoutint:
-            CMDLine.displayMessage($"Floor Manager {activeUser.UserName} has logged out.");
+            CMDLine.displayMessage($"Floor manager {activeUser.UserName} has logged out.");
             activeUser = null;
             return false;
             break;

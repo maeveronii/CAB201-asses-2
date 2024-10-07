@@ -9,6 +9,11 @@ class FloorManager : Staff
         UserFloorNumber = userFloorNumber;
     }
 
+    public FloorManager()
+    {
+
+    }
+
     public void displayFloorManagerDetails()
         {
             CMDLine.displayMessage("Your details.");
@@ -17,6 +22,8 @@ class FloorManager : Staff
             CMDLine.displayMessage($"Mobile phone: {UserMobile}");
             CMDLine.displayMessage($"Email: {UserEmail}");
             CMDLine.displayMessage($"Staff ID: {UserStaffID}");
-            CMDLine.displayMessage($"Floor: {UserFloorNumber}");
+            CMDLine.displayMessage($"Floor: {UserFloorNumber}.");
         }
+
+
 }

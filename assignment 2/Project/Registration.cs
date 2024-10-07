@@ -135,6 +135,7 @@ public partial class Menu
 
         Patient patient = new Patient(name, age, mobile, email, password, type);
         Users.Add(patient);
+        Patients.Add(patient);
         
         
         CMDLine.displayMessage($"{name} is registered as a patient.");
@@ -251,6 +252,7 @@ public partial class Menu
 
         FloorManager floorManager = new FloorManager(name, age, mobile, email, password, type, staffID, floorNumber);
         Users.Add(floorManager);
+        FloorManagers.Add(floorManager);
 
         
         CMDLine.displayMessage($"{name} is registered as a floor manager.");
@@ -300,6 +302,7 @@ public partial class Menu
 
         Surgeon surgeon = new Surgeon(name, age, mobile, email, password, type, staffID, specialty);
         Users.Add(surgeon);
+        Surgeons.Add(surgeon);
         
     
         

@@ -24,8 +24,15 @@ public partial class Menu{
     int emailIndex;
 
     bool loggedIn = false;
+
     User activeUser = new();
+    Patient activePatient = new();
+    FloorManager activeFloorManager = new();
+    Surgeon activeSurgeon = new();
     List<User> Users = new List<User>();
+    List<Patient> Patients = new List<Patient>();
+    List<FloorManager> FloorManagers = new List<FloorManager>();
+    List<Surgeon> Surgeons = new List<Surgeon>();
 
     /// <summary>
     /// Creates a bool that when true, loops through attached menu, in this case, the main menu.

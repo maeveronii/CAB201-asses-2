@@ -11,6 +11,12 @@ class Patient : User
     public Patient(string userName, int userAge, string userMobile, string userEmail, string userPassword, string userType)
         :base(userName, userAge, userMobile, userEmail, userPassword, userType)
     {
+        
+    }
+
+    public Patient()
+    {
+
     }
 
     public void displayPatientDetails()

@@ -8,4 +8,9 @@ class Staff : User
     {
         UserStaffID = userStaffID;
     }
+
+    public Staff()
+    {
+        
+    }
 }

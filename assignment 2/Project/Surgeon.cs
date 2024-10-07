@@ -11,4 +11,9 @@ class Surgeon : Staff
         UserSpecialty = userSpecialty;
     }
 
+    public Surgeon()
+    {
+
+    }
+
 }
