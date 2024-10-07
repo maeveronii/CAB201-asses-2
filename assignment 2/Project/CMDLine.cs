@@ -23,7 +23,7 @@ class CMDLine{
 
     public static string getString()
     {
-        string input = Console.ReadLine();
+        string input = Console.ReadLine() ?? "";
         return input;
     }
 

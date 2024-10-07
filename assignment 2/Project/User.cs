@@ -18,18 +18,6 @@ public class User
         UserPassword = userPassword;
     }
 
-    public bool checkIfEmailReal(string email)
-    {
     
-        if(UserEmail != email)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-        
-    }
 }
 
