@@ -252,5 +252,13 @@ public partial class Menu
         return true;
     }
 
+    /*TO DO: 
+    -Add surgeon menu
+    -Add change password method
+    -Add constructors necessary for patients (surgeon, floor, room)
+    -Create multidimensional list that includes all floor levels and numbers
+    */
+
+
 
     } 
