@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.Design;
 
 namespace Hospital;
 public class User
@@ -23,6 +24,15 @@ public class User
 
     public User()
     {
+
+    }
+
+    public void changePassword()
+    {
+        CMDLine.displayMessage("Enter new password:");
+        string newPass = CMDLine.getString();
+        UserPassword = newPass;
+        CMDLine.displayMessage("Password has been changed.");
 
     }
 }

@@ -35,10 +35,15 @@ public partial class Menu{
     /*These lists work in similar ways to their respective "active" objects. They are used for logging in to the system. When a new user is registered, 
     they are added to their respective list, and then later, when logging in, if an object matching the users email and password inputs is found in one
     of these lists, the user is transported to the respective menu, e.g. the patient menu. */
-    List<User> Users = new List<User>();
-    List<Patient> Patients = new List<Patient>();
-    List<FloorManager> FloorManagers = new List<FloorManager>();
-    List<Surgeon> Surgeons = new List<Surgeon>();
+    public static List<User> Users = new List<User>();
+    public static List<Patient> Patients = new List<Patient>();
+    public static List<FloorManager> FloorManagers = new List<FloorManager>();
+    public static List<Surgeon> Surgeons = new List<Surgeon>();
+
+    /*public List<Patient> GetPatientList()
+    {
+        return Patients;
+    }*/
 
     /// <summary>
     /// Creates a bool that when true, loops through attached menu, in this case, the main menu.

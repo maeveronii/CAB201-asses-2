@@ -195,8 +195,10 @@ public partial class Menu
         string type = "Patient";
         bool checkedIn = false;
         bool surgeryPerformed = false;
+        int userFloor = 0;
+        int userRoom = 0;
 
-        Patient patient = new Patient(name, age, mobile, email, password, type, checkedIn, surgeryPerformed);
+        Patient patient = new Patient(name, age, mobile, email, password, type, checkedIn, surgeryPerformed, userFloor, userRoom);
         Users.Add(patient);
         Patients.Add(patient);
         

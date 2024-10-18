@@ -12,12 +12,18 @@ public partial class Menu
     /// </summary>
     private void LoginBaseMenu()
     {
-        bool success = false;
+        //bool success = false;
         
         CMDLine.displayMessage("Login Menu.");
+
+        /*if(Users.Count() == 0)
+        {
+            CMDLine.displayError("#Error - There are no people registered.");
+            //success = false;
+        }*/
+
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
-
 
         for(var i = 0; i < Users.Count(); i++)
         {
@@ -25,9 +31,11 @@ public partial class Menu
             {
                 activeUser = Users[i];
                 emailIndex = i;
-                success = true;
+                //success = true;
             }
         }
+
+
         // TO-DO       if email is not registered, say that and spit back to old menu
         
         CMDLine.displayMessage("Please enter in your password:");
@@ -67,7 +75,7 @@ public partial class Menu
                        activeSurgeon = Surgeons[i];
                    }
                }
-               //SurgeonMenu();
+               SurgeonMenu();
             }
 
         }
@@ -130,9 +138,10 @@ public partial class Menu
             break;
 
             case changepasswordint:
-            /*CurrentlyLoggedIn.changePassword();*/
-            return false;
-            break;
+            activeUser.changePassword();
+            activePatient.UserPassword = activeUser.UserPassword;
+            return true;
+            break; 
 
             case checkinoutint:
             if(!activePatient.userCheckedIn)
@@ -147,8 +156,8 @@ public partial class Menu
             break;
 
             case seeroomint:
-            /*CurrentlyLoggedIn.seeRoom();*/
-            return false;
+            activePatient.patientSeeRoom();
+            return true;
             break;
 
             case seesurgeonint:
@@ -164,6 +173,7 @@ public partial class Menu
             case logoutint:
             CMDLine.displayMessage($"Patient {activePatient.UserName} has logged out.");
             activeUser = null;
+            activePatient = null;
             return false;
             break;
 
@@ -204,13 +214,13 @@ public partial class Menu
         const string floordisplaydetailsstr = "Display my details";
         const string floorchangepasswordstr = "Change password";
         const string assignroomstr = "Assign room to patient";
-        const string assignsurgery = "Assign surgery";
+        const string assignsurgerystr = "Assign surgery";
         const string unassignroomstr = "Unassign room";
         const string floorlogoutstr = "Log out";
 
         const int  floordisplaydetailsint = 0, floorchangepasswordint = 1, assignroomint = 2, assignsurgeryint = 3, unassignroomint = 4, floorlogoutint = 5;
 
-        int option = CMDLine.GetOption(titlestr, floordisplaydetailsstr, floorchangepasswordstr, assignroomstr, assignsurgery, unassignroomstr, floorlogoutstr);
+        int option = CMDLine.GetOption(titlestr, floordisplaydetailsstr, floorchangepasswordstr, assignroomstr, assignsurgerystr, unassignroomstr, floorlogoutstr);
 
         switch(option)
         {
@@ -220,13 +230,14 @@ public partial class Menu
             break;
 
             case floorchangepasswordint:
-            /*CurrentlyLoggedIn.changePassword();*/
-            return false;
+            activeUser.changePassword();
+            activeFloorManager.UserPassword = activeUser.UserPassword;
+            return true;
             break;
 
             case assignroomint:
-            /*CurrentlyLoggedIn.checkIn();*/
-            return false;
+            activeFloorManager.assignPatientToRoom();
+            return true;
             break;
 
             case assignsurgeryint:
@@ -242,6 +253,7 @@ public partial class Menu
             case floorlogoutint:
             CMDLine.displayMessage($"Floor manager {activeUser.UserName} has logged out.");
             activeUser = null;
+            activeFloorManager = null;
             return false;
             break;
 
@@ -252,11 +264,91 @@ public partial class Menu
         return true;
     }
 
-    /*TO DO: 
-    -Add surgeon menu
-    -Add change password method
-    -Add constructors necessary for patients (surgeon, floor, room)
-    -Create multidimensional list that includes all floor levels and numbers
+    /// <summary>
+    /// Method that sets up the workings of the surgeon menu. Works the same as other "setup" methods.
+    /// </summary>
+    /// <returns></returns>
+    private bool SurgeonMenu()
+    {
+        bool keepRunningSurgeonMenu = true;
+
+        while(keepRunningSurgeonMenu)
+        {
+            keepRunningSurgeonMenu = displaySurgeonMenu();
+        }
+
+        return keepRunningSurgeonMenu;
+    }
+
+    /// <summary>
+    /// Method that displays the Menu for all Surgeon activities.
+    /// </summary>
+    /// <returns></returns>
+    private bool displaySurgeonMenu() 
+    {
+
+        CMDLine.displayMessage();
+        CMDLine.displayMessage("Surgeon Menu.");
+        
+        const string titlestr = "Please choose from the menu below:";
+        const string surgeondisplaydetailsstr = "Display my details";
+        const string surgeonchangepasswordstr = "Change password";
+        const string surgeonseepatientsstr = "See your list of patients";
+        const string surgeonseeschedulestr = "See your schedule";
+        const string surgeonperformsurgerystr = "Perform surgery";
+        const string surgeonlogoutstr = "Log out";
+
+        const int  surgeondisplaydetailsint = 0, surgeonchangepasswordint = 1, surgeonseepatientsint = 2, surgeonseescheduleint = 3, surgeonperformsurgeryint = 4, surgeonlogoutint = 5;
+
+        int option = CMDLine.GetOption(titlestr, surgeondisplaydetailsstr, surgeonchangepasswordstr, surgeonseepatientsstr, surgeonseeschedulestr, surgeonperformsurgerystr, surgeonlogoutstr);
+
+        switch(option)
+        {
+            case surgeondisplaydetailsint:
+            activeSurgeon.displaySurgeonDetails();
+            return true;
+            break;
+
+            case surgeonchangepasswordint:
+            activeUser.changePassword();
+            activeSurgeon.UserPassword = activeUser.UserPassword;
+            return true;
+            break;
+
+            case surgeonseepatientsint:
+            /*CurrentlyLoggedIn.checkIn();*/
+            return false;
+            break;
+
+            case surgeonseescheduleint:
+            /*CurrentlyLoggedIn.seeRoom();*/
+            return false;
+            break;
+
+            case surgeonperformsurgeryint:
+            /*CurrentlyLoggedIn.seeSurgeon();*/
+            return false;
+            break;
+
+            case surgeonlogoutint:
+            CMDLine.displayMessage($"Surgeon {activeUser.UserName} has logged out.");
+            activeUser = null;
+            activeSurgeon = null;
+            return false;
+            break;
+
+            default:
+            CMDLine.displayError("#Error - Invalid Menu Option. Please try again.");
+            break;
+        }
+        return true;
+    } 
+
+    /*TO DO NEXT:
+    - Ability to assign multiple patients to multiple rooms
+    - Ability to assign surgery
+    - Ability to see surgery (patient)
+    - Ability to see surgery (surgeon)
     */
 
 

@@ -72,4 +72,23 @@ class CMDLine{
 
         return option -1;
     }
+
+    public static int GetOptionList(string title, List<string> options)
+    {
+        if(options.Count <=0)
+        {
+            return -1;
+        }
+
+        Console.WriteLine(title);
+        int digitsNeeded = (int)(1 + Math.Floor(Math.Log10(options.Count)));
+        for (int i = 0; i < options.Count; i++)
+        {
+            Console.WriteLine($"{(i + 1).ToString().PadLeft(digitsNeeded)}. {options[i]}");
+        }
+
+        int option = getInt($"Please enter a choice between 1 and {options.Count}.");
+
+        return option -1;
+    }
 }

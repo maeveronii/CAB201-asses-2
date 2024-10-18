@@ -3,13 +3,14 @@ using Microsoft.VisualBasic;
 
 namespace Hospital;
 
-class Patient : User
+public class Patient : User
 {
     public bool userCheckedIn {get; set;}
     public bool userSurgeryPerformed {get; set;}
     public string patientsSurgeon {get; set;}
     public int patientsRoom {get; set;}
-    public Patient(string userName, int userAge, string userMobile, string userEmail, string userPassword, string userType, bool userCheckedIn, bool userSurgeryPerformed)
+    public int patientsFloor {get; set;}
+    public Patient(string userName, int userAge, string userMobile, string userEmail, string userPassword, string userType, bool userCheckedIn, bool userSurgeryPerformed, int patientsRoom, int patientsFloor)
         :base(userName, userAge, userMobile, userEmail, userPassword, userType)
     {
 
@@ -49,6 +50,19 @@ class Patient : User
         else if(userCheckedIn && !userSurgeryPerformed)
         {
             CMDLine.displayError("Error - You are unable to check out at this time.");
+        }
+    }
+
+    public void patientSeeRoom()
+    {
+        if(patientsRoom != 0 && patientsFloor != 0)
+        {
+            CMDLine.displayMessage($"Your room is number {patientsRoom} on floor {patientsFloor}.");
+        }
+
+        else if(patientsRoom == 0)
+        {
+            CMDLine.displayMessage("You do not have an assigned room.");
         }
     }
 
