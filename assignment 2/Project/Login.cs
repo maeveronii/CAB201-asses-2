@@ -321,8 +321,8 @@ public partial class Menu
             break;
 
             case surgeonseescheduleint:
-            /*CurrentlyLoggedIn.seeRoom();*/
-            return false;
+            activeSurgeon.seeSchedule();
+            return true;
             break;
 
             case surgeonperformsurgeryint:
@@ -343,13 +343,6 @@ public partial class Menu
         }
         return true;
     } 
-
-    /*TO DO NEXT:
-    - Ability to assign multiple patients to multiple rooms
-    - Ability to assign surgery
-    - Ability to see surgery (patient)
-    - Ability to see surgery (surgeon)
-    */
 
 
 

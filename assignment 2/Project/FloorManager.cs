@@ -18,6 +18,9 @@ public class FloorManager : Staff
 
     }
 
+    /// <summary>
+    /// Displays the floor managers details
+    /// </summary>
     public void displayFloorManagerDetails()
         {
             CMDLine.displayMessage("Your details.");
@@ -29,8 +32,17 @@ public class FloorManager : Staff
             CMDLine.displayMessage($"Floor: {UserFloorNumber}.");
         }
     
+    /// <summary>
+    /// Assigns patients that do not already have a room, and are checked in, to a room.
+    /// </summary>
     public void assignPatientToRoom()
     {
+        if(Menu.Patients.Count() < 1)
+        {
+            CMDLine.displayMessage("There are no registered patients.");
+            return;
+        }
+        
         int roomAssign;
         int patientToAssignInt;
         List<string> patientSelect = new List<string>();
@@ -63,8 +75,20 @@ public class FloorManager : Staff
         }
     }
 
+    /// <summary>
+    /// Assigns patients that have a room a surgeon, and surgery.
+    /// </summary>
     public void assignSurgeryToPatient()
     {
+        if(Menu.Patients.Count() < 1)
+        {
+            CMDLine.displayMessage("There are no registered patients.");
+            return;
+        }
+        //if(Menu.Patients.All.userCheckedIn == false)
+        //{
+
+        //}
         int patientToAssignSurgeryInt;
         List<string> patientSurgerySelect = new List<string>();
         string assignPatientStr = "Please select your patient:";

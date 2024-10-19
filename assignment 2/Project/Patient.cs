@@ -22,6 +22,9 @@ public class Patient : User
 
     }
 
+    /// <summary>
+    /// Displays the patients details
+    /// </summary>
     public void displayPatientDetails()
         {
             CMDLine.displayMessage("Your details.");
@@ -31,12 +34,18 @@ public class Patient : User
             CMDLine.displayMessage($"Email: {UserEmail}");
         }
 
+    /// <summary>
+    /// Swaps the bool value userCheckedIn to check in the patient
+    /// </summary>
     public void checkIn()
     {
         userCheckedIn = true;
         CMDLine.displayMessage($"Patient {UserName} has been checked in.");
     }
 
+    /// <summary>
+    /// Checks the patient out, but only if they have had surgery performed on them
+    /// </summary>
     public void checkOut()
     {
         if(userCheckedIn && userSurgeryPerformed)
@@ -54,6 +63,9 @@ public class Patient : User
         }
     }
 
+    /// <summary>
+    /// Allows patient to see what room, if any, they have been assigned
+    /// </summary>
     public void patientSeeRoom()
     {
         if(patientsRoom != 0 && patientsFloor != 0)
@@ -67,9 +79,12 @@ public class Patient : User
         }
     }
 
+    /// <summary>
+    /// Allows patient to see their assigned surgery
+    /// </summary>
     public void patientSeeSurgeryDate()
     {
-        if(!String.IsNullOrEmpty(patientsSurgeryTime.ToString(DATETIMEconst.DATETIMEFORMAT)))
+        if(!String.IsNullOrEmpty(patientsSurgeryTime.ToString(DATETIMEconst.DATETIMEFORMAT))) //DOESNT WORK
         {
             CMDLine.displayMessage($"Your surgery time is {patientsSurgeryTime.ToString(DATETIMEconst.DATETIMEFORMAT)}.");
         }
@@ -80,6 +95,9 @@ public class Patient : User
         }
     }
 
+    /// <summary>
+    /// Allows patient to see their assigned surgeon
+    /// </summary>
     public void patientSeeSurgeon()
     {
         if(!String.IsNullOrEmpty(patientsSurgeon))

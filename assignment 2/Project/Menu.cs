@@ -68,22 +68,6 @@ public partial class Menu{
     {
         CMDLine.displayMessage();
 
-        /*Patient john = new Patient("john", 13, 012345, "maeve@maeve", password, "patient");
-        Users.Add(john);
-
-        FloorManager john2 = new FloorManager("john", 13, 012345, "maeve2@maeve", password, "patient", 503, 1);
-        Users.Add(john2);
-
-        User john3 = new User("john", 13, 012345, "maeve3@maeve", password, "patient");
-        Users.Add(john3);
-
-        for(var i = 0; i < Users.Count(); i++)
-        {
-            CMDLine.displayMessage(Users[i].UserEmail);
-        }*/
-
-
-        
         const string MAINMENUSTR = "Please choose from the menu below:";
         const string LOGINSTR = "Login as a registered user";
         const string REGISTERSTR = "Register as a new user";
