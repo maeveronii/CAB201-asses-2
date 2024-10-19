@@ -16,11 +16,11 @@ public partial class Menu
         
         CMDLine.displayMessage("Login Menu.");
 
-        /*if(Users.Count() == 0)
+        if(Users.Count() == 0)
         {
             CMDLine.displayError("#Error - There are no people registered.");
-            //success = false;
-        }*/
+            return;
+        }
 
         CMDLine.displayMessage("Please enter in your email:");
         string email = CMDLine.getString();
@@ -161,13 +161,13 @@ public partial class Menu
             break;
 
             case seesurgeonint:
-            /*CurrentlyLoggedIn.seeSurgeon();*/
-            return false;
+            activePatient.patientSeeSurgeon();
+            return true;
             break;
 
             case seesurgerydetailsint:
-            /*CurrentlyLoggedIn.seeSurgeryDetails();*/
-            return false;
+            activePatient.patientSeeSurgeryDate();
+            return true;
             break;
 
             case logoutint:
@@ -241,8 +241,8 @@ public partial class Menu
             break;
 
             case assignsurgeryint:
-            /*CurrentlyLoggedIn.seeRoom();*/
-            return false;
+            activeFloorManager.assignSurgeryToPatient();
+            return true;
             break;
 
             case unassignroomint:
@@ -316,8 +316,8 @@ public partial class Menu
             break;
 
             case surgeonseepatientsint:
-            /*CurrentlyLoggedIn.checkIn();*/
-            return false;
+            activeSurgeon.seePatients();
+            return true;
             break;
 
             case surgeonseescheduleint:
@@ -326,8 +326,8 @@ public partial class Menu
             break;
 
             case surgeonperformsurgeryint:
-            /*CurrentlyLoggedIn.seeSurgeon();*/
-            return false;
+            activeSurgeon.performSurgery();
+            return true;
             break;
 
             case surgeonlogoutint:

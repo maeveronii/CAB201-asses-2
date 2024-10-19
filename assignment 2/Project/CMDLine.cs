@@ -1,5 +1,10 @@
-using System.Security.AccessControl;
 using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Hospital;
 
@@ -52,7 +57,19 @@ class CMDLine{
         return b;
     }
 
-    //get date function
+    public static DateTime GetDateTime()
+        {
+            string input = Console.ReadLine();  
+            DateTime result;
+            string format = DATETIMEconst.DATETIMEFORMAT; // Expected format is "HH:mm dd/MM/yyyy"
+            bool dtWorked = DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+            if (!dtWorked)
+            {
+                displayError("Incorrect Date Format");
+            }
+            return result;
+        }
+
 
     public static int GetOption(string title, params object[] options)
     {

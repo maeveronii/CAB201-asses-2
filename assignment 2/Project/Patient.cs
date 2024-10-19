@@ -8,9 +8,10 @@ public class Patient : User
     public bool userCheckedIn {get; set;}
     public bool userSurgeryPerformed {get; set;}
     public string patientsSurgeon {get; set;}
+    public DateTime patientsSurgeryTime {get; set;}
     public int patientsRoom {get; set;}
     public int patientsFloor {get; set;}
-    public Patient(string userName, int userAge, string userMobile, string userEmail, string userPassword, string userType, bool userCheckedIn, bool userSurgeryPerformed, int patientsRoom, int patientsFloor)
+    public Patient(string userName, int userAge, string userMobile, string userEmail, string userPassword, string userType, bool userCheckedIn, bool userSurgeryPerformed, string patientsSurgeon, DateTime patientsSurgeryTime, int patientsRoom, int patientsFloor)
         :base(userName, userAge, userMobile, userEmail, userPassword, userType)
     {
 
@@ -63,6 +64,32 @@ public class Patient : User
         else if(patientsRoom == 0)
         {
             CMDLine.displayMessage("You do not have an assigned room.");
+        }
+    }
+
+    public void patientSeeSurgeryDate()
+    {
+        if(!String.IsNullOrEmpty(patientsSurgeryTime.ToString(DATETIMEconst.DATETIMEFORMAT)))
+        {
+            CMDLine.displayMessage($"Your surgery time is {patientsSurgeryTime.ToString(DATETIMEconst.DATETIMEFORMAT)}.");
+        }
+
+        else
+        {
+            CMDLine.displayMessage("You do not have an assigned surgery.");
+        }
+    }
+
+    public void patientSeeSurgeon()
+    {
+        if(!String.IsNullOrEmpty(patientsSurgeon))
+        {
+            CMDLine.displayMessage($"Your surgeon is {patientsSurgeon}.");
+        }
+
+        else
+        {
+            CMDLine.displayMessage("You do not have an assigned surgeon.");
         }
     }
 

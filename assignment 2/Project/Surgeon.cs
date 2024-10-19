@@ -27,4 +27,47 @@ public class Surgeon : Staff
             CMDLine.displayMessage($"Speciality: {UserSpecialty}");
         }
 
+    public void seePatients()
+    {
+        int numToGoUp = 1;
+        CMDLine.displayMessage("Your Patients.");
+        for(var i = 0; i < Menu.Patients.Count(); i++)
+        {
+            if(!Menu.Patients[i].userSurgeryPerformed)
+            {
+                CMDLine.displayMessage($"{numToGoUp}. {Menu.Patients[i].UserName}");
+                numToGoUp += 1;
+            }
+        }
+    }
+    public void performSurgery()
+    {
+        int patientSurgeryInt;
+        List<string> patientSelect = new List<string>();
+        string assignPatientStr = "Please select your patient:";
+        for(var i = 0; i < Menu.Patients.Count(); i++)
+        {
+            if(!Menu.Patients[i].userSurgeryPerformed)
+            {
+                patientSelect.Add(Menu.Patients[i].UserName);
+            }
+        }
+        patientSurgeryInt = CMDLine.GetOptionList(assignPatientStr, patientSelect);
+
+
+        for(var i = 0; i < Menu.Patients.Count(); i++)
+        {
+            if(patientSelect[patientSurgeryInt] == Menu.Patients[i].UserName)
+            {
+           //assigning values
+            Menu.Patients[i].userSurgeryPerformed = true;
+
+            CMDLine.displayMessage($"Surgery performed on {Menu.Patients[i].UserName} by {UserName}.");
+
+            }
+        }
+
+
+    }
+
 }

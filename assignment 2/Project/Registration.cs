@@ -157,15 +157,80 @@ public partial class Menu
         bool success = false;
         do
         {
+            bool fail = false;
             CMDLine.displayMessage("Please enter in your email:");
             email = CMDLine.getString();
             if(IsValidEmail(email))
             {
-                success = true;
+                for(var i = 0; i < Menu.Users.Count(); i++)
+                {
+                    if(Menu.Users[i].UserEmail == email)
+                    {
+                        CMDLine.displayError("#Error - Email is already registered, please try again.");
+                        fail = true;
+                    }
+                    
+                }
+                if(!fail)
+                {
+                    success = true;
+                }
             }
             if(!IsValidEmail(email))
             {
                 CMDLine.displayError("#Error - Supplied email is invalid, please try again.");
+            }
+        }while(!success);
+    }
+
+    private void checkStaffID() //tbh this method is insanely convoluted and has a BUNCH of nested ifs which is... horrible. least favourite method in my system
+    {
+        bool success = false;
+        do
+        {
+            CMDLine.displayMessage("Please enter in your staff ID:");
+            staffID = CMDLine.getInt();
+            if (staffID < 100 || staffID > 999)
+            {
+                CMDLine.displayError("#Error - Supplied staff identification number is invalid, please try again.");
+            }
+            else
+            {
+                var staffCount = Menu.FloorManagers.Count() + Menu.Surgeons.Count();
+                if(staffCount > 0)
+                {
+                    for(var i = 0; i < staffCount; i++)
+                    {
+                        if(Menu.FloorManagers.Count() > 0)
+                        {
+                            if(staffID == Menu.FloorManagers[i].UserStaffID)
+                            {
+                                CMDLine.displayError("#Error - Staff ID is already registered, please try again.");
+                            }
+                            else
+                            {
+                                success = true;
+                            }
+                        }
+                        if(Menu.Surgeons.Count() > 0)
+                        {
+                            if (staffID == Menu.Surgeons[i].UserStaffID)
+                            {
+                                CMDLine.displayError("#Error - Staff ID is already registered, please try again.");
+                            }
+                            else
+                            {
+                                success = true;
+                            }
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    success = true;
+                }
+
             }
         }while(!success);
     }
@@ -195,10 +260,12 @@ public partial class Menu
         string type = "Patient";
         bool checkedIn = false;
         bool surgeryPerformed = false;
+        string chosenSurgeon = null;
+        DateTime timeOfSurgery = new DateTime();
         int userFloor = 0;
         int userRoom = 0;
 
-        Patient patient = new Patient(name, age, mobile, email, password, type, checkedIn, surgeryPerformed, userFloor, userRoom);
+        Patient patient = new Patient(name, age, mobile, email, password, type, checkedIn, surgeryPerformed, chosenSurgeon, timeOfSurgery, userFloor, userRoom);
         Users.Add(patient);
         Patients.Add(patient);
         
@@ -286,19 +353,9 @@ public partial class Menu
         }
 
         checkMobile();
-        CMDLine.displayMessage("Please enter in your email:");
-        string email = CMDLine.getString();
+        checkEmail();
         checkPassword();
-
-        while(staffID < 100 || staffID > 999) 
-        {
-            CMDLine.displayMessage("Please enter in your staff ID:");
-            staffID = CMDLine.getInt();
-            if (staffID < 100 || staffID > 999)
-            {
-                CMDLine.displayError("#Error - Supplied staff identification number is invalid, please try again.");
-            }
-        }
+        checkStaffID();
 
         while(floorNumber < 1 || floorNumber > 6) 
         {
@@ -345,19 +402,9 @@ public partial class Menu
         }
 
         checkMobile();
-        CMDLine.displayMessage("Please enter in your email:");
-        string email = CMDLine.getString();
+        checkEmail();
         checkPassword();
-        
-        while(staffID < 100 || staffID > 999) 
-        {
-            CMDLine.displayMessage("Please enter in your staff ID:");
-            staffID = CMDLine.getInt();
-            if (staffID < 100 || staffID > 999)
-            {
-                CMDLine.displayError("#Error - Supplied staff identification number is invalid, please try again.");
-            }
-        }
+        checkStaffID();
 
         registerSurgeonSpecialty();
 
